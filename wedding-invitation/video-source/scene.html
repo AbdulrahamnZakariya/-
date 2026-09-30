@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>فيديو دعوة زفاف عبدالرحمن الزعبي</title>
+<link rel="stylesheet" href="fonts/local.css">
+<style>
+  :root {
+    --wine: #7A1C2A;
+    --wine-deep: #5A111D;
+    --ink: #3B2A2C;
+    --ink-soft: #7A6660;
+    --paper: #FBF7F1;
+    --gold: #B8935A;
+  }
+  html, body { margin: 0; background: #EFE3DA; }
+  #stage {
+    position: relative; width: 1080px; height: 1920px; overflow: hidden;
+    background: #EFE3DA; direction: rtl;
+  }
+  #stage > * { position: absolute; left: 0; top: 0; }
+  #bg, #ribBack, #ribFront, #vignette, #fade { width: 1080px; height: 1920px; }
+  #vignette { background: radial-gradient(120% 80% at 50% 45%, rgba(0,0,0,0) 55%, rgba(90,30,35,.22) 100%); pointer-events: none; }
+  #fade { background: #F7EFE8; }
+
+  /* ---------- envelope ---------- */
+  .envBox { width: 640px; height: 440px; transform-origin: 50% 50%; }
+  .envBack {
+    position: absolute; inset: 0; border-radius: 6px;
+    background: linear-gradient(180deg, #F1E8DD, #E9DED1);
+    box-shadow: 0 40px 70px rgba(90,30,40,.28), 0 6px 14px rgba(90,30,40,.15);
+  }
+  .liner {
+    position: absolute; left: 0; top: 0; width: 640px; height: 256px;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    background: linear-gradient(180deg, #5E121F, #7A1C2A);
+  }
+  .envFront { }
+  .pocket {
+    position: absolute; inset: 0; border-radius: 6px;
+    clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+    background: linear-gradient(180deg, #FBF6EF 30%, #F0E7DB 100%);
+  }
+  .pocket svg { position: absolute; inset: 0; }
+  .flapBox { perspective: 1800px; }
+  .flap {
+    position: absolute; left: 0; top: 0; width: 640px; height: 256px;
+    transform-origin: 50% 0; transform-style: preserve-3d;
+  }
+  .face {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  .face.out {
+    background: linear-gradient(180deg, #8C2434 0%, #7A1C2A 55%, #661522 100%);
+  }
+  .face.out svg { position: absolute; left: 270px; top: 70px; width: 100px; height: 80px; }
+  .face.in { transform: rotateX(180deg); background: linear-gradient(0deg, #5A111D, #74192A); }
+  .seal {
+    position: absolute; left: 277px; top: 203px; width: 86px; height: 86px;
+    border-radius: 48% 52% 50% 50% / 52% 47% 53% 48%;
+    background: radial-gradient(circle at 36% 30%, #A5343F 0%, #7C1E2A 52%, #4F0F18 100%);
+    box-shadow: 0 5px 8px rgba(60,10,20,.4), inset 0 -4px 8px rgba(0,0,0,.35), inset 0 3px 4px rgba(255,255,255,.18);
+    display: grid; place-items: center;
+  }
+  .seal::before {
+    content: ""; position: absolute; inset: 13px; border-radius: 50%;
+    box-shadow: inset 0 0 0 2px rgba(60,8,16,.45), 0 1px 0 rgba(255,255,255,.15);
+  }
+  .seal svg { width: 40px; height: 40px; }
+  .tassel { position: absolute; left: 305px; top: 282px; width: 30px; height: 150px; transform-origin: 15px 0; }
+
+  /* ---------- card ---------- */
+  .cardWrap { width: 460px; height: 640px; transform-origin: 0 0; }
+  .ruffle { position: absolute; left: -90px; top: -90px; width: 640px; height: 820px; }
+  .cardFace {
+    position: absolute; inset: 0; border-radius: 3px;
+    background-color: var(--paper);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .35 0 0 0 0 .3 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    box-shadow: 0 14px 34px rgba(90,30,40,.22), 0 0 0 1px rgba(184,147,90,.18) inset;
+  }
+  .page {
+    position: absolute; left: 30px; right: 30px; top: 0; bottom: 0;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    color: var(--ink); font-family: "Amiri", serif;
+  }
+  .page.top { justify-content: flex-start; padding-top: 46px; }
+  .page.center { justify-content: center; }
+  .line { display: block; margin: 0; }
+  .w { display: inline-block; will-change: opacity, filter, transform; }
+  .basm { font-family: "Aref Ruqaa", serif; font-size: 40px; color: var(--wine); line-height: 1.6; margin-bottom: 10px; }
+  .v { font-size: 27px; line-height: 1.95; }
+  .ref { font-size: 18px; color: var(--gold); margin-top: 6px; }
+  .poem { font-size: 39px; line-height: 2.05; }
+  .b { font-size: 34px; line-height: 2; }
+  .s { font-size: 28px; line-height: 1.9; color: var(--ink-soft); }
+  .host { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 50px; line-height: 1.7; color: var(--wine); }
+  .groom { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 98px; line-height: 1.35; color: var(--wine); }
+  .bride { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 50px; line-height: 1.6; color: var(--ink); }
+  .big { font-size: 42px; font-weight: 700; line-height: 1.8; }
+  .venue { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 52px; line-height: 1.7; color: var(--wine); }
+  .note { font-size: 35px; line-height: 2; color: var(--wine); font-weight: 700; }
+  .rule { width: 150px; height: 14px; margin: 8px 0; }
+  .mono { font-family: "Aref Ruqaa", serif; font-weight: 700; font-size: 126px; line-height: 1.25; color: var(--wine);
+          text-shadow: 0 2px 0 rgba(184,147,90,.55), 0 6px 14px rgba(122,28,42,.18); }
+  .date { font-size: 30px; letter-spacing: .32em; direction: ltr; color: var(--ink); margin-top: 6px; }
+  .thanks { font-size: 34px; line-height: 2; color: var(--ink-soft); margin-top: 18px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="bg" viewBox="0 0 1080 1920"></svg>
+  <canvas id="ribBack" width="1080" height="1920"></canvas>
+
+  <!-- envelope back (behind card) -->
+  <div class="envBox" id="envBack">
+    <div class="envBack"></div>
+    <div class="liner"></div>
+  </div>
+  <!-- flap: z-index switches as it opens -->
+  <div class="envBox flapBox" id="flapBox">
+    <div class="flap" id="flap">
+      <div class="face out">
+        <svg viewBox="0 0 100 80"><use href="#swansGold"/></svg>
+      </div>
+      <div class="face in"></div>
+    </div>
+  </div>
+
+  <div class="cardWrap" id="cardWrap">
+    <svg class="ruffle" id="ruffle" viewBox="-90 -90 640 820"></svg>
+    <div class="cardFace" id="cardFace"></div>
+  </div>
+
+  <!-- envelope front pocket + seal + tassel -->
+  <div class="envBox" id="envFront">
+    <div class="pocket">
+      <svg viewBox="0 0 640 440" width="640" height="440">
+        <path d="M0 440 L300 236 M640 440 L340 236" stroke="rgba(120,90,80,.16)" stroke-width="2" fill="none"/>
+        <path d="M0 0 L320 246 L640 0" stroke="rgba(255,255,255,.7)" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+    <svg class="tassel" id="tassel" viewBox="0 0 30 150">
+      <path d="M15 0 V40" stroke="#5A111D" stroke-width="2.5"/>
+      <rect x="9" y="38" width="12" height="16" rx="4" fill="#6A1522"/>
+      <rect x="8" y="52" width="14" height="4" rx="2" fill="#B8935A"/>
+      <g stroke="#6E1826" stroke-width="1.6">
+        <path d="M11 56 L6 140"/><path d="M13 56 L10 144"/><path d="M15 56 L14 146"/><path d="M17 56 L18 145"/><path d="M19 56 L22 142"/><path d="M12 56 L8 143"/><path d="M18 56 L24 138"/>
+      </g>
+      <g stroke="#8E2A38" stroke-width="1"><path d="M14 56 L12 144"/><path d="M16 56 L16 146"/><path d="M18 56 L20 143"/></g>
+    </svg>
+    <div class="seal"><svg viewBox="0 0 40 40"><use href="#fleur" fill="#4F0F18" opacity=".75"/></svg></div>
+  </div>
+
+  <canvas id="ribFront" width="1080" height="1920"></canvas>
+  <div id="vignette"></div>
+  <div id="fade"></div>
+</div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="fleur" viewBox="0 0 40 40">
+      <path d="M20 3 C15 9 15 15 20 20 C25 15 25 9 20 3 Z"/>
+      <path d="M19 20 C12 12 4 14 5 21 C6 26 12 25 13 21 C12 24 16 25 19 22 Z"/>
+      <path d="M21 20 C28 12 36 14 35 21 C34 26 28 25 27 21 C28 24 24 25 21 22 Z"/>
+      <rect x="12" y="22" width="16" height="3" rx="1.5"/>
+      <path d="M18 25 L17 35 L20 32 L23 35 L22 25 Z"/>
+    </symbol>
+    <symbol id="swansGold" viewBox="0 0 100 80">
+      <g fill="none" stroke="#D6B477" stroke-width="2.4" stroke-linecap="round">
+        <path d="M50 58 C 44 50 34 40 36 26 C 38 14 50 14 47 26"/>
+        <path d="M50 58 C 56 50 66 40 64 26 C 62 14 50 14 53 26"/>
+        <path d="M50 58 C 40 66 24 66 12 56 C 20 58 28 54 32 48"/>
+        <path d="M50 58 C 60 66 76 66 88 56 C 80 58 72 54 68 48"/>
+      </g>
+      <path d="M50 4 l2.2 4.6 5 .6 -3.7 3.4 1 5 -4.5 -2.5 -4.5 2.5 1 -5 -3.7 -3.4 5 -.6z" fill="#D6B477" transform="translate(0 -2) scale(1)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<script>
+/* ================= helpers ================= */
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const eOut = p => 1 - Math.pow(1 - p, 3);
+const eIn = p => p * p * p;
+const eIO = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+/* ================= palace background (static SVG) ================= */
+function buildBg() {
+  const s = [];
+  s.push(`<defs>
+    <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEDFD5"/><stop offset="1" stop-color="#E4D1C5"/></linearGradient>
+    <linearGradient id="gFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8F0EA"/><stop offset="1" stop-color="#EFE2D9"/></linearGradient>
+    <linearGradient id="gCol" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#DCC7BA"/><stop offset=".45" stop-color="#FBF4EE"/><stop offset="1" stop-color="#D7C1B3"/></linearGradient>
+    <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6D5CA"/><stop offset="1" stop-color="#F4EAE3"/></linearGradient>
+    <radialGradient id="gGlow" cx=".5" cy=".42" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gSwan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFDFA"/><stop offset="1" stop-color="#E6DAD2"/></linearGradient>
+    <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E3C58E"/><stop offset="1" stop-color="#A9824A"/></linearGradient>
+  </defs>`);
+  // far space seen through the arch
+  s.push(`<rect width="1080" height="1500" fill="url(#gFar)"/>`);
+  for (const x of [262, 400, 636, 774]) {
+    s.push(`<rect x="${x}" y="760" width="44" height="740" fill="url(#gCol)" opacity=".45"/>`);
+    s.push(`<rect x="${x - 6}" y="742" width="56" height="18" fill="#E7D8CE" opacity=".6"/>`);
+  }
+  s.push(`<path d="M306 760 A47 60 0 0 1 400 760 M680 760 A47 60 0 0 1 774 760 M444 760 A96 110 0 0 1 636 760" fill="none" stroke="#E3D3C8" stroke-width="8" opacity=".7"/>`);
+  s.push(`<rect x="0" y="1380" width="1080" height="120" fill="#EADCD2" opacity=".5"/>`);
+  s.push(`<rect width="1080" height="1500" fill="url(#gGlow)"/>`);
+  // front wall with the big arch cut out
+  s.push(`<path fill-rule="evenodd" fill="url(#gWall)" d="M0 0 H1080 V1500 H0 Z M170 1500 V700 A370 370 0 0 1 910 700 V1500 Z"/>`);
+  // side arches (partial)
+  s.push(`<path d="M-140 1500 V820 A110 110 0 0 1 80 820 V1500 Z" fill="url(#gFar)"/>`);
+  s.push(`<path d="M1000 1500 V820 A110 110 0 0 1 1220 820 V1500 Z" fill="url(#gFar)"/>`);
+  s.push(`<path d="M-160 1500 V820 A130 130 0 0 1 100 820 V1500 M980 1500 V820 A130 130 0 0 1 1240 820 V1500" fill="none" stroke="#D9C4B7" stroke-width="10"/>`);
+  // frieze + cornice
+  s.push(`<rect x="0" y="96" width="1080" height="16" fill="#E7D6CB"/><rect x="0" y="112" width="1080" height="4" fill="#FFF7F1"/>`);
+  for (let x = 6; x < 1080; x += 30) s.push(`<rect x="${x}" y="122" width="16" height="14" fill="#E2CFC3"/>`);
+  s.push(`<rect x="0" y="140" width="1080" height="6" fill="#DCC7BA"/>`);
+  // arch mouldings
+  s.push(`<path d="M150 1500 V700 A390 390 0 0 1 930 700 V1500" fill="none" stroke="#D5BEB0" stroke-width="12"/>`);
+  s.push(`<path d="M170 1500 V700 A370 370 0 0 1 910 700 V1500" fill="none" stroke="#FFF8F2" stroke-width="5"/>`);
+  s.push(`<path d="M128 1500 V700 A412 412 0 0 1 952 700 V1500" fill="none" stroke="#DDC9BC" stroke-width="4"/>`);
+  // pilasters
+  for (const x of [84, 932]) {
+    s.push(`<rect x="${x}" y="700" width="64" height="800" fill="url(#gCol)"/>`);
+    for (const dx of [16, 32, 48]) s.push(`<rect x="${x + dx - 1}" y="740" width="2" height="720" fill="#D3BDAF" opacity=".7"/>`);
+    s.push(`<rect x="${x - 12}" y="672" width="88" height="30" rx="4" fill="#EFE3DA"/><rect x="${x - 6}" y="700" width="76" height="8" fill="#D8C3B6"/>`);
+    s.push(`<circle cx="${x - 6}" cy="684" r="10" fill="none" stroke="#D2BCAE" stroke-width="4"/><circle cx="${x + 70}" cy="684" r="10" fill="none" stroke="#D2BCAE" stroke-width="4"/>`);
+  }
+  // keystone shell ornament
+  s.push(`<g transform="translate(540 318)">`);
+  for (let i = -5; i <= 5; i++) s.push(`<ellipse cx="0" cy="-34" rx="9" ry="36" transform="rotate(${i * 15})" fill="#F7EEE7" stroke="#D2BAA9" stroke-width="2"/>`);
+  s.push(`<circle r="14" fill="#F3E8E0" stroke="url(#gGold)" stroke-width="3"/><path d="M-40 18 Q0 40 40 18" stroke="#D2BAA9" stroke-width="4" fill="none"/></g>`);
+  // floor
+  s.push(`<rect y="1500" width="1080" height="420" fill="url(#gFloor)"/><rect y="1498" width="1080" height="4" fill="#D6C2B5"/>`);
+  seed = 11;
+  for (let i = 0; i < 14; i++) {
+    const x = rnd() * 1080, y = 1530 + rnd() * 380;
+    s.push(`<path d="M${x} ${y} q ${60 + rnd() * 120} ${-20 + rnd() * 40} ${160 + rnd() * 160} ${-10 + rnd() * 30}" stroke="#D9C8BE" stroke-width="${1 + rnd() * 1.5}" fill="none" opacity=".6"/>`);
+  }
+  // balustrades
+  const bal = (x0, x1, post) => {
+    s.push(`<rect x="${x0}" y="1318" width="${x1 - x0}" height="24" fill="url(#gWall)" stroke="#D2BCAE" stroke-width="2"/>`);
+    s.push(`<rect x="${x0}" y="1470" width="${x1 - x0}" height="30" fill="#E5D3C8" stroke="#D2BCAE" stroke-width="2"/>`);
+    for (let x = x0 + 16; x < x1 - 10; x += 38) {
+      s.push(`<path d="M${x} 1342 h18 c0 16 -4 20 -2 30 c10 20 12 50 4 70 c-2 8 0 20 2 28 h-22 c2 -8 4 -20 2 -28 c-8 -20 -6 -50 4 -70 c2 -10 -2 -14 -2 -30 z" transform="translate(-9 0)" fill="url(#gCol)" stroke="#D2BCAE" stroke-width="1.5"/>`);
+    }
+    s.push(`<rect x="${post - 30}" y="1280" width="60" height="220" fill="url(#gCol)" stroke="#D2BCAE" stroke-width="2"/><rect x="${post - 38}" y="1268" width="76" height="16" rx="3" fill="#EFE3DA" stroke="#D2BCAE"/>`);
+    s.push(`<path d="M${post - 22} 1268 c-6 -30 8 -44 22 -48 c14 4 28 18 22 48 z" fill="url(#gCol)" stroke="#D2BCAE" stroke-width="2"/><circle cx="${post}" cy="1212" r="9" fill="url(#gGold)"/>`);
+  };
+  bal(0, 300, 300); bal(780, 1080, 780);
+  // swans (heart)
+  s.push(`<ellipse cx="540" cy="1778" rx="300" ry="26" fill="#C9AFA3" opacity=".35"/>`);
+  const swan = `
+    <path d="M6 168 C 12 210 90 232 170 222 C 225 214 262 188 272 126 C 250 150 222 156 200 150 C 176 128 132 124 98 136 C 64 148 32 150 6 168 Z" fill="url(#gSwan)" stroke="#D8CAC1" stroke-width="2"/>
+    <path d="M60 176 C 110 150 170 150 222 170 M80 196 C 130 176 180 178 236 160 M150 142 C 190 128 230 140 262 132" fill="none" stroke="#E0D2C9" stroke-width="3"/>
+    <path d="M14 40 C 22 -12 100 -14 96 50 C 92 100 36 128 8 170" fill="none" stroke="#DDCFC6" stroke-width="30" stroke-linecap="round"/>
+    <path d="M14 40 C 22 -12 100 -14 96 50 C 92 100 36 128 8 170" fill="none" stroke="url(#gSwan)" stroke-width="26" stroke-linecap="round"/>
+    <ellipse cx="22" cy="40" rx="20" ry="15" fill="#FFFDFA" stroke="#DDCFC6" stroke-width="2"/>
+    <path d="M6 42 L-6 58 L10 52 Z" fill="#C98A5A"/><path d="M4 40 L10 38 L12 46 Z" fill="#3B2A2C"/>
+    <circle cx="16" cy="36" r="2" fill="#3B2A2C"/>`;
+  s.push(`<g transform="translate(546 1540) scale(1.05)">${swan}</g>`);
+  s.push(`<g transform="translate(534 1540) scale(-1.05 1.05)">${swan}</g>`);
+  s.push(`<g transform="translate(518 1470) scale(1.1)"><use href="#fleur" width="40" height="40" fill="url(#gGold)"/></g>`);
+  document.getElementById('bg').innerHTML = s.join('');
+}
+
+/* ================= ruffle frame around the card ================= */
+function rrPoint(x, y, w, h, r, u) {
+  // point on rounded rect perimeter at arc length u (clockwise from top-left straight)
+  const segs = [];
+  const L = 2 * (w - 2 * r) + 2 * (h - 2 * r) + 2 * Math.PI * r;
+  u = ((u % L) + L) % L;
+  const straight = (x0, y0, x1, y1, n) => ({ len: Math.hypot(x1 - x0, y1 - y0), f: q => [lerp(x0, x1, q), lerp(y0, y1, q), n] });
+  const arc = (cx, cy, a0) => ({ len: Math.PI * r / 2, f: q => { const a = a0 + q * Math.PI / 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a), [Math.cos(a), Math.sin(a)]]; } });
+  segs.push(straight(x + r, y, x + w - r, y, [0, -1]), arc(x + w - r, y + r, -Math.PI / 2),
+    straight(x + w, y + r, x + w, y + h - r, [1, 0]), arc(x + w - r, y + h - r, 0),
+    straight(x + w - r, y + h, x + r, y + h, [0, 1]), arc(x + r, y + h - r, Math.PI / 2),
+    straight(x, y + h - r, x, y + r, [-1, 0]), arc(x + r, y + r, Math.PI));
+  for (const sg of segs) { if (u <= sg.len) return sg.f(u / sg.len); u -= sg.len; }
+  return segs[0].f(0);
+}
+function buildRuffle() {
+  const W = 460, H = 640, out = 58;
+  const ox = -out, oy = -out, ow = W + 2 * out, oh = H + 2 * out, orr = 70;
+  const L = 2 * (ow - 2 * orr) + 2 * (oh - 2 * orr) + 2 * Math.PI * orr;
+  const Li = 2 * (W - 2 * 20) + 2 * (H - 2 * 20) + 2 * Math.PI * 20;
+  const pts = [], pleats = [];
+  for (let u = 0; u < L; u += 3) {
+    const [px, py, n] = rrPoint(ox, oy, ow, oh, orr, u);
+    const d = 9 * Math.sin(2 * Math.PI * u / 44) + 3 * Math.sin(2 * Math.PI * u / 19 + 1) + 6;
+    pts.push([px + n[0] * d, py + n[1] * d]);
+  }
+  for (let u = 0; u < L; u += 9) {
+    const [px, py, n] = rrPoint(ox, oy, ow, oh, orr, u);
+    const d = 9 * Math.sin(2 * Math.PI * u / 44) + 3 * Math.sin(2 * Math.PI * u / 19 + 1) + 4;
+    const [ix, iy] = rrPoint(10, 10, W - 20, H - 20, 20, u / L * Li);
+    pleats.push(`M${ix.toFixed(1)} ${iy.toFixed(1)} L${(px + n[0] * d).toFixed(1)} ${(py + n[1] * d).toFixed(1)}`);
+  }
+  const outline = 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L') + ' Z';
+  document.getElementById('ruffle').innerHTML = `
+    <defs><radialGradient id="rg" cx=".5" cy=".5" r=".62"><stop offset=".62" stop-color="#6A1522"/><stop offset="1" stop-color="#9A3040"/></radialGradient></defs>
+    <path d="${outline}" fill="url(#rg)" opacity=".82"/>
+    <path d="${pleats.filter((_, i) => i % 2).join(' ')}" stroke="rgba(255,215,215,.16)" stroke-width="2" fill="none"/>
+    <path d="${pleats.filter((_, i) => !(i % 2)).join(' ')}" stroke="rgba(70,8,18,.28)" stroke-width="1.4" fill="none"/>
+    <path d="${outline}" fill="none" stroke="#5A0F1B" stroke-width="3.5" opacity=".9"/>
+    <path d="${outline}" fill="none" stroke="rgba(255,200,200,.35)" stroke-width="1.2" transform="translate(0 2)"/>`;
+}
+
+/* ================= chiffon ribbons (canvas) ================= */
+function basePathLeft() {
+  const pts = [];
+  pts.push([600, 238]);
+  for (let i = 0; i <= 60; i++) {
+    const a = -Math.PI / 2 - (i / 60) * Math.PI / 2;
+    pts.push([540 + 430 * Math.cos(a), 690 + 430 * Math.sin(a)]);
+  }
+  for (let y = 700; y <= 1300; y += 20) pts.push([110 + Math.sin(y / 90) * 6, y]);
+  for (let i = 1; i <= 20; i++) {
+    const q = i / 20, x = (1 - q) * (1 - q) * 110 + 2 * (1 - q) * q * 70 + q * q * -120, y = (1 - q) * (1 - q) * 1300 + 2 * (1 - q) * q * 1520 + q * q * 1660;
+    pts.push([x, y]);
+  }
+  return resample(pts, 260);
+}
+function resample(pts, n) {
+  const cum = [0];
+  for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  const tot = cum[cum.length - 1], out = [];
+  let j = 0;
+  for (let k = 0; k < n; k++) {
+    const target = tot * k / (n - 1);
+    while (j < cum.length - 2 && cum[j + 1] < target) j++;
+    const q = (target - cum[j]) / (cum[j + 1] - cum[j] || 1);
+    out.push([lerp(pts[j][0], pts[j + 1][0], q), lerp(pts[j][1], pts[j + 1][1], q)]);
+  }
+  return out.map((p, i) => {
+    const a = out[Math.max(0, i - 1)], b = out[Math.min(n - 1, i + 1)];
+    const tx = b[0] - a[0], ty = b[1] - a[1], l = Math.hypot(tx, ty) || 1;
+    return { x: p[0], y: p[1], nx: -ty / l, ny: tx / l, s: i / (n - 1) };
+  });
+}
+const BASE_L = basePathLeft();
+const BASE_R = BASE_L.map(p => ({ x: 1080 - p.x, y: p.y, nx: p.nx, ny: -p.ny * -1, s: p.s })).map(p => ({ ...p, nx: -p.nx }));
+
+function drawChiffon(ctx, base, t, o) {
+  const L = [], R = [], C = [];
+  for (const p of base) {
+    const env = clamp(p.s / 0.05);
+    const d = o.amp * env * Math.sin(2 * Math.PI * o.k * p.s + o.ph + o.w * t);
+    const w = o.width * (0.14 + 0.86 * Math.abs(Math.sin(2 * Math.PI * o.k2 * p.s + o.ph2 + o.w * 0.6 * t))) * (0.6 + 0.4 * env);
+    const cx = p.x + p.nx * d, cy = p.y + p.ny * d;
+    C.push([cx, cy, w, p.nx, p.ny]);
+    L.push([cx + p.nx * w / 2, cy + p.ny * w / 2]);
+    R.push([cx - p.nx * w / 2, cy - p.ny * w / 2]);
+  }
+  const poly = () => { ctx.beginPath(); ctx.moveTo(L[0][0], L[0][1]); for (const q of L) ctx.lineTo(q[0], q[1]); for (let i = R.length - 1; i >= 0; i--) ctx.lineTo(R[i][0], R[i][1]); ctx.closePath(); };
+  // soft shadow
+  ctx.save(); ctx.filter = 'blur(10px)'; ctx.translate(10, 18); poly(); ctx.fillStyle = 'rgba(70,10,20,.10)'; ctx.fill(); ctx.restore();
+  poly(); ctx.fillStyle = `rgba(118,18,32,${o.alpha})`; ctx.fill();
+  for (const [k, col, lw] of [[.18, 'rgba(90,12,24,.30)', 2], [.36, 'rgba(255,205,205,.20)', 3], [.5, 'rgba(90,12,24,.28)', 1.6], [.66, 'rgba(255,205,205,.16)', 2.4], [.82, 'rgba(90,12,24,.30)', 2]]) {
+    ctx.beginPath();
+    C.forEach(([cx, cy, w, nx, ny], i) => { const x = cx + nx * (k - .5) * w, y = cy + ny * (k - .5) * w; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+    ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.stroke();
+  }
+  for (const E of [L, R]) { ctx.beginPath(); E.forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.strokeStyle = 'rgba(95,14,26,.55)'; ctx.lineWidth = 1.6; ctx.stroke(); }
+}
+
+const ribBack = document.getElementById('ribBack').getContext('2d');
+const ribFront = document.getElementById('ribFront').getContext('2d');
+function drawRibbons(t) {
+  const c = ribBack; c.clearRect(0, 0, 1080, 1920);
+  const ribs = [
+    { amp: 66, k: 1.6, ph: 0, width: 128, k2: 1.15, ph2: 0, w: .7, alpha: .52 },
+    { amp: 58, k: 1.9, ph: Math.PI, width: 104, k2: 1.45, ph2: 1.3, w: .7, alpha: .44 },
+  ];
+  for (const base of [BASE_L, BASE_R]) for (const o of ribs) drawChiffon(c, base, t + (base === BASE_R ? 1.7 : 0), o);
+  // gathered knot at the top centre
+  c.save(); c.translate(540, 250);
+  for (let i = 0; i < 5; i++) {
+    c.beginPath(); c.ellipse(Math.sin(t * .8 + i) * 4, 0, 46 - i * 6, 20 - i * 2, (i - 2) * .35, 0, Math.PI * 2);
+    c.fillStyle = `rgba(122,24,38,${.22 + i * .05})`; c.fill();
+  }
+  c.restore();
+}
+function drawFront(t) {
+  const c = ribFront; c.clearRect(0, 0, 1080, 1920);
+  // sweeping chiffon across the card
+  for (const [ts, dur, y, dir] of [[TL.sweep1, 1.9, 900, 1], [TL.sweep2, 1.9, 860, -1]]) {
+    const p = prog(t, ts, ts + dur);
+    if (p <= 0 || p >= 1) continue;
+    const off = lerp(-2500, 2500, eIO(p)) * dir;
+    const pts = [];
+    for (let i = 0; i <= 60; i++) { const q = i / 60; pts.push([540 + off + (q - .5) * 2600 * dir, y + Math.sin(q * 7 + t * 2) * 60 - (q - .5) * 160]); }
+    const base = resample(pts, 120);
+    drawChiffon(c, base, t, { amp: 30, k: 2, ph: 0, width: 520, k2: 1.1, ph2: .6, w: 2, alpha: .62 });
+    drawChiffon(c, base, t + .6, { amp: 60, k: 2.4, ph: 2, width: 340, k2: 1.4, ph2: 2, w: 2, alpha: .45 });
+  }
+  // falling petals near the end
+  if (t > TL.petals) {
+    seed = 99;
+    for (let i = 0; i < 18; i++) {
+      const x0 = rnd() * 1080, sp = 110 + rnd() * 90, start = TL.petals + rnd() * 8, rot = rnd() * 6;
+      const tt = t - start; if (tt < 0) continue;
+      const y = -60 + tt * sp; if (y > 1980) continue;
+      const x = x0 + Math.sin(tt * 1.3 + i) * 50;
+      c.save(); c.translate(x, y); c.rotate(rot + tt * (0.8 + rnd())); c.scale(1, .55 + .45 * Math.sin(tt * 2 + i));
+      c.beginPath(); c.ellipse(0, 0, 16, 11, 0, 0, Math.PI * 2);
+      const g = c.createLinearGradient(-16, 0, 16, 0); g.addColorStop(0, '#6A1320'); g.addColorStop(1, '#A33142');
+      c.fillStyle = g; c.globalAlpha = .9; c.fill(); c.restore();
+    }
+  }
+}
+
+/* ================= timeline ================= */
+const TL = {
+  envIn: [1.0, 5.0], flap: [6.0, 7.4], rise: [7.2, 9.4],
+  detach: [20.6, 23.0], ruffle: [21.6, 23.4],
+  sweep1: 45.2, sweep2: 51.0, petals: 46, end: 58,
+};
+const PAGES = [
+  { t0: 9.4, t1: 15.4, mode: 'top', lines: [
+    ['basm', 'بسم الله الرحمن الرحيم'],
+    ['v', '﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم'],
+    ['v', 'مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا'],
+    ['v', 'وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾'],
+    ['ref', 'سورة الروم ٢١'] ] },
+  { t0: 15.8, t1: 20.8, mode: 'top', lines: [
+    ['poem', 'في ليلةٍ كُتِبَ'], ['poem', 'للحبِّ أن يكتمل'], ['poem', 'وللقلبينِ أن يلتقيا'], ['poem', 'على وعدٍ جميل'] ] },
+  { t0: 23.0, t1: 28.6, mode: 'center', lines: [
+    ['poem', 'نفتتحُ فصلاً'], ['poem', 'جديداً من حكايةٍ'], ['poem', 'بدأت بالمودّة'], ['poem', 'وتُوِّجت بالعُمرِ معاً'] ] },
+  { t0: 29.0, t1: 34.4, mode: 'center', lines: [
+    ['b', 'بكلِّ ودٍّ ومحبّة'], ['b', 'يتشرّف'], ['host', 'السيد زكريا الزعبي'], ['b', 'بدعوتكم لحضور حفل زفاف نجله'] ] },
+  { t0: 34.8, t1: 40.2, mode: 'center', lines: [
+    ['s', 'المهندس'], ['groom', 'عبدالرحمن'], ['rule', ''], ['s', 'على كريمة'], ['bride', 'السيد أحمد الزعيم'] ] },
+  { t0: 40.6, t1: 45.8, mode: 'center', lines: [
+    ['b', 'وذلك مساء يوم السبت'], ['big', '10 تشرين الأول 2026'], ['b', 'من الساعة 5:00 حتى 7:00 مساءً'], ['rule', ''], ['venue', 'قاعات سيدار'], ['s', 'إربد'] ] },
+  { t0: 46.4, t1: 51.6, mode: 'center', lines: [
+    ['poem', 'ولتبقى أمسيتُنا'], ['poem', 'كما حلمنا بها'], ['rule', ''], ['note', 'نعتذرُ بكلِّ محبّة'], ['note', 'عن اصطحابِ الأطفال'] ] },
+  { t0: 52.2, t1: 99, mode: 'center', lines: [
+    ['mono', 'عبدالرحمن'], ['date', '10 . 10 . 2026'], ['thanks', 'بحضوركم تكتملُ فرحتنا'] ] },
+];
+const RULE = `<svg class="rule" viewBox="0 0 150 14"><path d="M0 7 H60 M90 7 H150" stroke="#B8935A" stroke-width="1.2"/><path d="M75 1 L81 7 L75 13 L69 7 Z" fill="#B8935A"/></svg>`;
+
+const face = document.getElementById('cardFace');
+const pageEls = PAGES.map(pg => {
+  const el = document.createElement('div');
+  el.className = 'page ' + pg.mode;
+  const words = [];
+  el.innerHTML = pg.lines.map(([cls, txt]) => cls === 'rule' ? `<span class="line w">${RULE}</span>` :
+    `<p class="line ${cls}">${txt.split(' ').map(w => `<span class="w">${w}</span>`).join(' ')}</p>`).join('');
+  face.appendChild(el);
+  el.querySelectorAll('.w').forEach(w => words.push(w));
+  return { el, words, pg };
+});
+
+function renderText(t) {
+  for (const { el, words, pg } of pageEls) {
+    if (t < pg.t0 - .01 || t > pg.t1 + .01) { el.style.visibility = 'hidden'; continue; }
+    el.style.visibility = 'visible';
+    const n = words.length, step = Math.min(.2, 2.4 / n);
+    const exitP = eIn(prog(t, pg.t1 - .7, pg.t1));
+    words.forEach((w, i) => {
+      const p = eOut(prog(t, pg.t0 + i * step, pg.t0 + i * step + .8));
+      const op = p * (1 - exitP);
+      const blur = (1 - p) * 10 + exitP * 8;
+      w.style.opacity = op.toFixed(3);
+      w.style.filter = blur > .05 ? `blur(${blur.toFixed(2)}px)` : 'none';
+      w.style.transform = `translateY(${((1 - p) * 14 - exitP * 10).toFixed(2)}px)`;
+    });
+  }
+}
+
+/* ================= main render ================= */
+const $ = id => document.getElementById(id);
+const envBack = $('envBack'), flapBox = $('flapBox'), flap = $('flap'), envFront = $('envFront'),
+  cardWrap = $('cardWrap'), ruffle = $('ruffle'), tassel = $('tassel'), fade = $('fade');
+
+function renderAt(t) {
+  drawRibbons(t);
+  drawFront(t);
+  fade.style.opacity = (1 - eOut(prog(t, 0, 1.2))).toFixed(3);
+
+  // envelope group transform
+  const inP = eOut(prog(t, ...TL.envIn));
+  const detP = eIn(prog(t, ...TL.detach));
+  const es = lerp(.16, 1, inP) * (1 + .012 * Math.sin(t * 1.4));
+  const EX = 220, EY0 = 900 + lerp(-120, 0, inP) + Math.sin(t * 1.1) * 6 + detP * 1000;
+  const envOp = inP * (1 - clamp(detP * 1.6));
+  const envT = `translate(${EX}px, ${EY0}px) scale(${es})`;
+  for (const el of [envBack, flapBox, envFront]) { el.style.transform = envT; el.style.opacity = envOp.toFixed(3); }
+  tassel.style.transform = `rotate(${(Math.sin(t * 1.6) * 4).toFixed(2)}deg)`;
+
+  // flap
+  const fp = eIO(prog(t, ...TL.flap));
+  flap.style.transform = `rotateX(${(fp * 178).toFixed(2)}deg)`;
+  $('bg').style.zIndex = 0; $('ribBack').style.zIndex = 1;
+  flapBox.style.zIndex = fp > .5 ? 2 : 5;
+  envBack.style.zIndex = 2; cardWrap.style.zIndex = 3; envFront.style.zIndex = 4;
+  $('ribFront').style.zIndex = 6; $('vignette').style.zIndex = 7; fade.style.zIndex = 8;
+
+  // card inside envelope (screen coords); envelope scales about its centre
+  const rp = eOut(prog(t, ...TL.rise));
+  const rise = lerp(40, -300, rp);
+  const ecx = EX + 320, ecy = EY0 + 220;
+  const inX = ecx + (90 - 320) * es, inY = ecy + (rise - 220) * es, inS = es;
+  // free position
+  const fs = 1.3, fX = 540 - 230 * fs, fY = 900 - 320 * fs + Math.sin(t * .9) * 4;
+  const mp = eIO(prog(t, TL.detach[0], TL.detach[1] + .4));
+  const cX = lerp(inX, fX, mp), cY = lerp(inY, fY, mp), cS = lerp(inS, fs, mp);
+  cardWrap.style.transform = `translate(${cX}px, ${cY}px) scale(${cS})`;
+  cardWrap.style.opacity = t < TL.flap[0] ? 0 : 1;
+  // clip the part of the card that is still below the envelope's bottom edge
+  const envBottom = ecy + 220 * es;
+  const clipPx = Math.max(0, (cY + 640 * cS - envBottom) / cS);
+  cardWrap.style.clipPath = detP > 0 ? 'none' : `inset(0 0 ${clipPx.toFixed(1)}px 0)`;
+  const ruP = eOut(prog(t, ...TL.ruffle));
+  ruffle.style.opacity = ruP.toFixed(3);
+  ruffle.style.transform = `scale(${lerp(.9, 1, ruP)})`;
+  ruffle.style.transformOrigin = '320px 410px';
+
+  renderText(t);
+}
+
+buildBg(); buildRuffle();
+window.renderAt = renderAt;
+window.TOTAL = TL.end;
+window.ready = document.fonts.ready.then(() => Promise.all([
+  document.fonts.load('40px "Aref Ruqaa"'), document.fonts.load('700 40px "Aref Ruqaa"'),
+  document.fonts.load('30px "Amiri"'), document.fonts.load('700 30px "Amiri"')])).then(() => true);
+renderAt(0);
+if (location.hash === '#play') { const t0 = performance.now(); (function loop() { renderAt(((performance.now() - t0) / 1000) % TL.end); requestAnimationFrame(loop); })(); }
+</script>
+</body>
+</html>
