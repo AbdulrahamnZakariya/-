@@ -54,7 +54,7 @@
     <div class="pg" id="p1">
       <div class="it calli" id="basm" style="top:270px;font-size:92px;font-weight:700;line-height:1.4">بسم الله الرحمن الرحيم</div>
       <div class="it" id="verse" style="top:415px;left:140px;width:800px;font-size:52px;line-height:1.9">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</div>
-      <div class="it" id="tsh" style="top:745px;font-size:48px;color:var(--ink-soft)">تتشرّف</div>
+      <div class="it" id="tsh" style="top:745px;font-size:48px;color:var(--ink-soft)">يتشرّف</div>
       <div class="col" id="fa" style="left:525px;top:835px"><div class="t">حضرة الدكتور</div><div class="n">شاهر حمادنه</div></div>
       <div class="it calli" id="wa" style="top:850px;font-size:96px;font-weight:700">و</div>
       <div class="col" id="fb" style="left:125px;top:835px"><div class="t">حضرة السيد</div><div class="n">زكريا الزعبي</div></div>
@@ -83,7 +83,9 @@
       <div class="tl-txt" id="ti3" style="left:254px;top:1035px"><div class="a">من الساعة 5:00</div><div class="b">حتى 7:00 مساءً</div></div>
       <div class="ico" id="ic3" style="left:804px;top:1050px"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="25"/><path d="M32 17v16l11 7"/></svg></div>
 
-      <div class="it calli" id="cl1" style="top:1290px;left:60px;font-size:80px;font-weight:700;line-height:1.55;width:960px">حضوركم يكتمل به الفرح<br>وتضاف به السعادة</div>
+      <div class="it calli" id="cl1" style="top:1245px;left:60px;font-size:72px;font-weight:700;line-height:1.5;width:960px">حضوركم يكتمل به الفرح<br>وتضاف به السعادة</div>
+      <svg id="orn" style="position:absolute;left:300px;top:1490px;width:480px;height:26px" viewBox="0 0 480 26" fill="none" stroke="#8E7D63" stroke-width="2"><path d="M0 13H200M280 13H480"/><path d="M240 2L252 13L240 24L228 13Z" fill="#8E7D63"/></svg>
+      <div class="it calli" id="kids" style="top:1520px;left:60px;font-size:70px;font-weight:700;width:960px;color:#6B5A46">جنة الأطفال في منازلهم</div>
     </div>
   </div>
 
@@ -413,7 +415,7 @@ const dateL = [...dt0.querySelectorAll('.w')];
 const T = {
   open: [4.0, 5.9], mono: 6.0, names: 6.9, date: 7.6, p0out: [10.6, 11.4],
   basm: 11.5, verse: 12.3, tsh: 14.5, fa: 15.1, wa: 15.6, fbb: 16.1, inv: 17.0, gm: 18.3, br: 18.9, rings: 19.5, p1out: [23.6, 24.4],
-  mash: 24.6, tline: 25.1, i1: 25.3, i2: 26.4, i3: 27.5, cl1: 28.6, cl2: 29.8, end: 32.5
+  mash: 24.6, tline: 25.1, i1: 25.3, i2: 26.4, i3: 27.5, cl1: 28.6, kids: 30.6, end: 34.0
 };
 function show(el, t, start, dur = .9, dy = 14) { fb(el, eOut(prog(t, start, start + dur)), dy); }
 const pages = [$('p0'), $('p1'), $('p2')];
@@ -455,7 +457,7 @@ function renderAt(t) {
   show($('mash'), t, T.mash, .9);
   $('tl').setAttribute('stroke-dashoffset', (1 - eIO(prog(t, T.tline, T.tline + 2.6))).toFixed(3));
   [['ti1', 'ic1', T.i1], ['ti2', 'ic2', T.i2], ['ti3', 'ic3', T.i3]].forEach(([a, b, s]) => { show($(a), t, s, .9); show($(b), t, s - .1, .7, 6); });
-  show($('cl1'), t, T.cl1, 1.2, 14);
+  show($('cl1'), t, T.cl1, 1.2, 14); show($('orn'), t, T.kids - .2, .9, 6); show($('kids'), t, T.kids, 1.1, 14);
 }
 
 drawCardBg(); drawDoor($('doorL'), false); drawDoor($('doorR'), true);
