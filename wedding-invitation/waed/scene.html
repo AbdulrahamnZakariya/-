@@ -45,9 +45,9 @@
 
     <!-- page 0: monogram -->
     <div class="pg" id="p0">
-      <div class="mono" id="mono" style="top:300px;"><span style="font-size:300px;line-height:1.3">م</span><span style="font-size:200px;line-height:1.3;opacity:.85">و</span></div>
-      <div class="it names" id="nm0" style="top:800px;">معاذ<i></i>وعد</div>
-      <div class="it date" id="dt0" style="top:940px;">21.11.2026</div>
+      <div class="mono" id="mono" style="top:230px;"><img src="monogram.png" alt="" style="height:560px;width:auto;display:block"></div>
+      <div class="it names" id="nm0" style="top:850px;">معاذ<i></i>وعد</div>
+      <div class="it date" id="dt0" style="top:990px;">21.11.2026</div>
     </div>
 
     <!-- page 1: verse, parents, couple -->
@@ -83,8 +83,7 @@
       <div class="tl-txt" id="ti3" style="left:254px;top:1035px"><div class="a">من الساعة 5:00</div><div class="b">حتى 7:00 مساءً</div></div>
       <div class="ico" id="ic3" style="left:804px;top:1050px"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="25"/><path d="M32 17v16l11 7"/></svg></div>
 
-      <div class="it calli" id="cl1" style="top:1260px;left:60px;font-size:76px;font-weight:700;line-height:1.5;width:960px">حضوركم يكتمل به الفرح<br>وتضاف به السعادة</div>
-      <div class="it" id="cl2" style="top:1500px;left:60px;font-size:50px;color:var(--ink-soft);width:960px">مع خالص المحبة والتقدير</div>
+      <div class="it calli" id="cl1" style="top:1290px;left:60px;font-size:80px;font-weight:700;line-height:1.55;width:960px">حضوركم يكتمل به الفرح<br>وتضاف به السعادة</div>
     </div>
   </div>
 
@@ -273,62 +272,123 @@ const sealCv = document.createElement('canvas'); sealCv.width = 240; sealCv.heig
   c.beginPath(); c.moveTo(-26, 62); c.lineTo(26, 62); c.lineWidth = 5; c.strokeStyle = lt; c.stroke();
 })();
 
-function ribbonShape(c, pts, fillA, fillB) {
-  c.beginPath(); pts.forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.closePath();
-  const g = c.createLinearGradient(0, pts[0][1], 0, pts[Math.floor(pts.length / 2)][1]); g.addColorStop(0, fillA); g.addColorStop(1, fillB);
-  c.fillStyle = g; c.fill(); c.lineWidth = 1.6; c.strokeStyle = 'rgba(150,128,100,.55)'; c.stroke();
+/* ---- realistic ivory silk ribbon: sprites are shaded once, then animated ---- */
+const IV_L = [251, 245, 233], IV_D = [212, 197, 168];
+const mixc = (a, b, t) => `rgb(${Math.round(lerp(a[0], b[0], t))},${Math.round(lerp(a[1], b[1], t))},${Math.round(lerp(a[2], b[2], t))})`;
+const cub = (p0, p1, p2, p3, t) => { const u = 1 - t; return [u * u * u * p0[0] + 3 * u * u * t * p1[0] + 3 * u * t * t * p2[0] + t * t * t * p3[0], u * u * u * p0[1] + 3 * u * u * t * p1[1] + 3 * u * t * t * p2[1] + t * t * t * p3[1]]; };
+function centerline(segs, n) {
+  const pts = []; segs.forEach((sg, si) => { for (let i = si ? 1 : 0; i <= n; i++) pts.push(cub(sg[0], sg[1], sg[2], sg[3], i / n)); });
+  return pts.map((p, i) => { const a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)]; const tx = b[0] - a[0], ty = b[1] - a[1], l = Math.hypot(tx, ty) || 1; return { x: p[0], y: p[1], tx: tx / l, ty: ty / l, nx: -ty / l, ny: tx / l, s: i / (pts.length - 1) }; });
 }
-function frayedBand(c, x0, x1, yc, h, sag) {
-  const top = [], bot = [];
-  for (let x = x0; x <= x1; x += 6) { const y = yc + Math.sin(x / 210) * sag; top.push([x, y - h / 2 + (Math.sin(x * .9) * 1.4)]); bot.push([x, y + h / 2 + (Math.sin(x * 1.1) * 1.4)]); }
-  ribbonShape(c, top.concat(bot.reverse()), '#F8F1E3', '#E6D8C0');
-  c.lineWidth = 1.2; c.strokeStyle = 'rgba(160,140,112,.28)';
-  for (let i = 0; i < 7; i++) { c.beginPath(); for (let x = x0; x <= x1; x += 24) { const y = yc + Math.sin(x / 210) * sag - h / 2 + 12 + i * (h - 24) / 6 + Math.sin(x / 70 + i) * 2; x === x0 ? c.moveTo(x, y) : c.lineTo(x, y); } c.stroke(); }
+const WEAVE = (function () {
+  const cv = document.createElement('canvas'); cv.width = 96; cv.height = 96; const c = cv.getContext('2d'); const id = c.createImageData(96, 96); seed(4242);
+  for (let y = 0; y < 96; y++) for (let x = 0; x < 96; x++) { const i = (y * 96 + x) * 4; const th = .5 + .5 * Math.sin(y * 2.3 + ((x >> 1) % 2 ? 1.6 : 0)); const v = 255 - th * 34 - rnd() * 26; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
+  c.putImageData(id, 0, 0); return cv;
+})();
+function overlayTexture(cv, alpha) {
+  const t = document.createElement('canvas'); t.width = cv.width; t.height = cv.height; const tc = t.getContext('2d');
+  tc.fillStyle = tc.createPattern(WEAVE, 'repeat'); tc.fillRect(0, 0, t.width, t.height);
+  tc.globalCompositeOperation = 'destination-in'; tc.drawImage(cv, 0, 0);
+  const c = cv.getContext('2d'); c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.globalCompositeOperation = 'multiply'; c.globalAlpha = alpha; c.drawImage(t, 0, 0); c.restore();
 }
-function tail(c, x, y, len, ang, w, sway) {
-  c.save(); c.translate(x, y); c.rotate(ang + sway);
-  const pts = [[-w / 2, 0], [-w / 2 - 4, len * .5], [-w / 2 + 6, len], [w / 2 + 10, len - 34], [w / 2 + 2, len * .5], [w / 2, 0]];
-  c.beginPath(); c.moveTo(pts[0][0], pts[0][1]); c.bezierCurveTo(pts[1][0], pts[1][1], pts[1][0], len * .8, pts[2][0], pts[2][1]);
-  c.lineTo(pts[3][0], pts[3][1]); c.bezierCurveTo(pts[4][0], len * .75, pts[4][0], pts[4][1], pts[5][0], pts[5][1]); c.closePath();
-  const g = c.createLinearGradient(-w / 2, 0, w / 2, len); g.addColorStop(0, '#F8F1E3'); g.addColorStop(1, '#E2D3B8'); c.fillStyle = g; c.fill();
-  c.lineWidth = 1.6; c.strokeStyle = 'rgba(150,128,100,.55)'; c.stroke();
-  c.lineWidth = 1.2; c.strokeStyle = 'rgba(160,140,112,.3)'; for (let i = -2; i <= 2; i++) { c.beginPath(); c.moveTo(i * w / 6, 6); c.quadraticCurveTo(i * w / 6 + 4, len * .5, i * w / 6 + 2, len - 20); c.stroke(); }
+function fray(c, edge, outSign, len, dens, alpha) {
+  for (let i = 0; i < edge.length; i++) for (let k = 0; k < dens; k++) {
+    const e = edge[i], l = rr(len * .3, len), a = Math.atan2(e.ny * outSign, e.nx * outSign) + rr(-.7, .7);
+    const x = e.x + rr(-1.5, 1.5), y = e.y + rr(-1.5, 1.5);
+    c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l);
+    c.strokeStyle = `rgba(${rr(214, 240) | 0},${rr(202, 228) | 0},${rr(176, 206) | 0},${rr(alpha * .5, alpha)})`; c.lineWidth = rr(.6, 1.2); c.stroke();
+  }
+}
+function edgeOf(pts, wfun, side, cut) {
+  const e = pts.map(p => { const w = wfun(p.s) / 2 * side; return { x: p.x + p.nx * w, y: p.y + p.ny * w, nx: p.nx * side, ny: p.ny * side }; });
+  if (cut && side < 0) { const k = 7, n = pts.length; for (let j = 0; j < k; j++) { const i = n - 1 - j, sh = cut * (1 - j / k); e[i].x -= pts[i].tx * sh; e[i].y -= pts[i].ty * sh; } }
+  return e;
+}
+function makeStrip(w, h, ox, oy, pts, wfun, phase, o) {
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const c = cv.getContext('2d'); c.translate(ox, oy);
+  const Lp = edgeOf(pts, wfun, 1, o.cut), Rp = edgeOf(pts, wfun, -1, o.cut);
+  for (let i = 0; i < pts.length - 1; i++) {
+    const ang = Math.atan2(pts[i].ty, pts[i].tx);
+    const sh = clamp(.58 + .34 * Math.sin(ang + phase) + .2 * Math.sin(i * .17 + phase * 2));
+    const col = mixc(IV_D, IV_L, sh);
+    c.beginPath(); c.moveTo(Lp[i].x, Lp[i].y); c.lineTo(Lp[i + 1].x, Lp[i + 1].y); c.lineTo(Rp[i + 1].x, Rp[i + 1].y); c.lineTo(Rp[i].x, Rp[i].y); c.closePath();
+    c.fillStyle = col; c.fill(); c.strokeStyle = col; c.lineWidth = 1.2; c.stroke();
+  }
+  // satin sheen along the middle, darker rim along both edges
+  c.save(); c.globalCompositeOperation = 'source-atop'; c.filter = 'blur(5px)';
+  c.beginPath(); pts.forEach((p, i) => { const ww = wfun(p.s) * .12; i ? c.lineTo(p.x + p.nx * ww, p.y + p.ny * ww) : c.moveTo(p.x + p.nx * ww, p.y + p.ny * ww); }); c.lineWidth = o.sheenW || 16; c.strokeStyle = `rgba(255,253,246,${o.sheen || .6})`; c.stroke();
+  c.filter = 'blur(3px)'; for (const E of [Lp, Rp]) { c.beginPath(); E.forEach((p, i) => i ? c.lineTo(p.x, p.y) : c.moveTo(p.x, p.y)); c.lineWidth = o.rimW || 10; c.strokeStyle = `rgba(120,98,66,${o.rim || .38})`; c.stroke(); }
   c.restore();
+  c.setTransform(1, 0, 0, 1, 0, 0); overlayTexture(cv, .55); c.translate(ox, oy);
+  fray(c, Lp, 1, o.fray, o.dens, .8); fray(c, Rp, -1, o.fray, o.dens, .8);
+  if (o.cut) { const n = pts.length; const endp = []; for (let i = 0; i <= 10; i++) { const a = Lp[n - 1], b = Rp[n - 1]; endp.push({ x: lerp(a.x, b.x, i / 10), y: lerp(a.y, b.y, i / 10), nx: pts[n - 1].tx, ny: pts[n - 1].ty }); } fray(c, endp, 1, o.fray * 1.3, 5, .85); }
+  return cv;
 }
-function loop(c, cx, cy, dir, s, tilt) {
-  c.save(); c.translate(cx, cy); c.scale(dir * s, s); c.rotate(tilt);
-  c.beginPath(); c.moveTo(0, -18); c.bezierCurveTo(60, -190, 300, -190, 310, -60); c.bezierCurveTo(316, 30, 120, 40, 0, 18); c.closePath();
-  const g = c.createLinearGradient(0, -180, 0, 40); g.addColorStop(0, '#F8F1E3'); g.addColorStop(1, '#E0D1B6'); c.fillStyle = g; c.fill(); c.lineWidth = 1.8; c.strokeStyle = 'rgba(150,128,100,.6)'; c.stroke();
-  c.beginPath(); c.moveTo(20, -14); c.bezierCurveTo(90, -130, 240, -128, 250, -58); c.bezierCurveTo(250, -10, 130, 14, 20, 8); c.closePath(); c.fillStyle = 'rgba(190,168,136,.32)'; c.fill();
-  c.lineWidth = 1.2; c.strokeStyle = 'rgba(160,140,112,.35)'; for (let i = 0; i < 4; i++) { c.beginPath(); c.moveTo(20, -8 + i * 4); c.bezierCurveTo(100, -150 + i * 12, 250, -150 + i * 14, 292, -50 + i * 6); c.stroke(); }
-  c.restore();
+function makeBand() {
+  const W = 1360, H = 170, cv = document.createElement('canvas'); cv.width = W; cv.height = H; const c = cv.getContext('2d'); seed(777);
+  const hh = 56, top = [], bot = [];
+  for (let x = 0; x <= W; x += 3) { const sag = Math.sin(x / 230) * 3.5; top.push({ x, y: 85 - hh + sag + rr(-.9, .9), nx: 0, ny: -1 }); bot.push({ x, y: 85 + hh + sag + rr(-.9, .9), nx: 0, ny: 1 }); }
+  c.beginPath(); top.forEach((p, i) => i ? c.lineTo(p.x, p.y) : c.moveTo(p.x, p.y)); for (let i = bot.length - 1; i >= 0; i--) c.lineTo(bot[i].x, bot[i].y); c.closePath();
+  const g = c.createLinearGradient(0, 25, 0, 145); g.addColorStop(0, '#F8F1E2'); g.addColorStop(.45, '#F0E6D1'); g.addColorStop(1, '#D9CAAC'); c.fillStyle = g; c.fill();
+  c.save(); c.globalCompositeOperation = 'source-atop';
+  for (let k = 0; k < 26; k++) {
+    const x = rr(-60, W), w = rr(26, 120), dark = rnd() < .55, a = rr(.05, .13);
+    c.save(); c.translate(x, 0); c.transform(1, 0, -.32 + rr(-.08, .08), 1, 0, 0);
+    const lg = c.createLinearGradient(0, 0, w, 0); const col = dark ? '112,92,62' : '255,254,248';
+    lg.addColorStop(0, `rgba(${col},0)`); lg.addColorStop(.5, `rgba(${col},${a})`); lg.addColorStop(1, `rgba(${col},0)`); c.fillStyle = lg; c.fillRect(0, 0, w, H); c.restore();
+  }
+  c.filter = 'blur(6px)'; c.fillStyle = 'rgba(255,253,246,.35)'; c.fillRect(0, 62, W, 14); c.restore();
+  overlayTexture(cv, .6);
+  c.save(); c.globalCompositeOperation = 'source-atop'; c.filter = 'blur(3px)'; for (const E of [top, bot]) { c.beginPath(); E.forEach((p, i) => i ? c.lineTo(p.x, p.y) : c.moveTo(p.x, p.y)); c.lineWidth = 9; c.strokeStyle = 'rgba(120,98,66,.36)'; c.stroke(); } c.restore();
+  fray(c, top, 1, 9, 2, .8); fray(c, bot, 1, 9, 2, .8);
+  return cv;
+}
+function makeKnot() {
+  const cv = document.createElement('canvas'); cv.width = 220; cv.height = 250; const c = cv.getContext('2d'); c.translate(110, 125); seed(31);
+  c.beginPath(); c.moveTo(-38, -50); c.quadraticCurveTo(-4, -62, 40, -48); c.quadraticCurveTo(54, 0, 42, 52); c.quadraticCurveTo(0, 62, -40, 50); c.quadraticCurveTo(-52, 0, -38, -50); c.closePath();
+  const g = c.createLinearGradient(-44, -20, 46, 24); g.addColorStop(0, '#DDCFB2'); g.addColorStop(.38, '#FBF6E9'); g.addColorStop(.72, '#EEE3CC'); g.addColorStop(1, '#D3C2A2'); c.fillStyle = g; c.fill();
+  c.save(); c.clip(); c.globalCompositeOperation = 'source-atop';
+  for (let i = -3; i <= 3; i++) { const y = i * 15; c.beginPath(); c.moveTo(-50, y + rr(-6, 6)); c.bezierCurveTo(-18, y + rr(-12, 12), 18, y + rr(-12, 12), 50, y + rr(-6, 6)); c.lineWidth = rr(2, 4.5); c.strokeStyle = i % 2 ? 'rgba(112,92,62,.26)' : 'rgba(255,254,248,.5)'; c.stroke(); }
+  c.filter = 'blur(5px)'; c.fillStyle = 'rgba(100,80,50,.30)'; c.fillRect(-56, -60, 18, 120); c.fillRect(38, -60, 18, 120); c.restore();
+  c.setTransform(1, 0, 0, 1, 0, 0); overlayTexture(cv, .5);
+  return cv;
+}
+let SP = null;
+function buildSprites() {
+  seed(901); SP = {};
+  SP.band = makeBand(); SP.knot = makeKnot();
+  const tw = s => 100 * (.52 + .48 * clamp(s / .2)) * (.96 + .04 * Math.sin(s * 9));
+  SP.tailA = makeStrip(280, 500, 140, 40, centerline([[[0, 0], [-22, 140], [-58, 270], [-34, 430]]], 90), tw, .4, { cut: 44, fray: 11, dens: 2, rim: .26, rimW: 8, sheen: .45, sheenW: 11 });
+  SP.tailB = makeStrip(280, 500, 140, 40, centerline([[[0, 0], [24, 150], [58, 280], [42, 440]]], 90), tw, 1.9, { cut: 44, fray: 11, dens: 2, rim: .26, rimW: 8, sheen: .45, sheenW: 11 });
+  const lw = s => 98 * (.3 + .7 * Math.pow(Math.sin(Math.PI * s), .55));
+  SP.loop = makeStrip(500, 380, 50, 285, centerline([[[0, 0], [74, -236], [338, -222], [356, -86]], [[356, -86], [376, 10], [154, 68], [8, 16]]], 70), lw, .9, { cut: 0, fray: 5, dens: 1, rim: .2, rimW: 7, sheen: .38, sheenW: 9 });
 }
 const rctx = $('ribbon').getContext('2d');
 function drawRibbon(t) {
   const c = rctx; c.clearRect(0, 0, 1080, 1920);
   const unt = eIO(prog(t, 3.2, 4.6)); if (unt >= 1) return;
-  const bs = eOut(prog(t, .9, 1.9)) * (1 - .75 * unt);
-  const sway = Math.sin(t * 2.1) * .018;
+  if (!SP) buildSprites();
+  const bs = eOut(prog(t, .9, 1.9)) * (1 - .7 * unt);
+  const sway = Math.sin(t * 2.1) * .02;
   const yc = 880, cx = 540;
   c.save(); c.globalAlpha = 1 - clamp((unt - .55) / .45);
   c.translate(unt * 1500, unt * 120); c.rotate(unt * .12);
-  c.shadowColor = 'rgba(80,55,30,.3)'; c.shadowBlur = 22; c.shadowOffsetY = 10;
-  frayedBand(c, -80, 1160, yc, 128, 7);
-  c.shadowBlur = 14;
-  tail(c, cx - 36, yc + 40, 400, .12, 100, sway * 1.4); tail(c, cx + 34, yc + 40, 440, -.10, 100, -sway);
+  c.shadowColor = 'rgba(70,44,20,.42)'; c.shadowBlur = 22; c.shadowOffsetY = 13;
+  c.drawImage(SP.band, -140, yc - 85);
+  c.save(); c.translate(cx - 30, yc + 40); c.rotate(.05 + sway * 1.5); c.drawImage(SP.tailA, -140, -40); c.restore();
+  c.save(); c.translate(cx + 30, yc + 40); c.rotate(-.04 - sway); c.drawImage(SP.tailB, -140, -40); c.restore();
   if (bs > .01) {
-    loop(c, cx - 28, yc - 6, -1, bs, -.10); loop(c, cx + 28, yc - 6, 1, bs, -.04);
-    c.beginPath(); c.roundRect(cx - 54, yc - 66, 108, 132, 26);
-    const kg = c.createLinearGradient(cx - 54, yc, cx + 54, yc); kg.addColorStop(0, '#E9DCC4'); kg.addColorStop(.5, '#F9F2E5'); kg.addColorStop(1, '#E3D4BA'); c.fillStyle = kg; c.fill(); c.lineWidth = 1.8; c.strokeStyle = 'rgba(150,128,100,.6)'; c.stroke();
-    c.lineWidth = 1.2; c.strokeStyle = 'rgba(160,140,112,.35)'; for (let i = -2; i <= 2; i++) { c.beginPath(); c.moveTo(cx + i * 18, yc - 56); c.lineTo(cx + i * 18 + 3, yc + 56); c.stroke(); }
+    c.save(); c.translate(cx - 24, yc - 2); c.rotate(-.05 + sway); c.scale(-bs, bs); c.drawImage(SP.loop, -50, -285); c.restore();
+    c.save(); c.translate(cx + 24, yc - 2); c.rotate(.03 - sway); c.scale(bs, bs); c.drawImage(SP.loop, -50, -285); c.restore();
   }
+  c.drawImage(SP.knot, cx - 110, yc - 125);
   // wax seal: flips off and falls between 0.5 and 1.6
   const sp = prog(t, .5, 1.6);
   if (sp < 1) {
     const e = eIn(sp);
     c.save(); c.translate(cx - 70 * sp, yc + 20 + 900 * e); c.rotate(-.5 * sp);
-    c.scale(Math.max(.08, Math.abs(Math.cos(sp * 5.2))) , 1); c.scale(1.0, 1);
-    c.shadowColor = 'rgba(40,50,30,.45)'; c.shadowBlur = 18; c.shadowOffsetY = 8;
+    c.scale(Math.max(.08, Math.abs(Math.cos(sp * 5.2))), 1);
+    c.shadowColor = 'rgba(40,50,30,.5)'; c.shadowBlur = 18; c.shadowOffsetY = 8;
     c.drawImage(sealCv, -120, -120, 240, 240); c.restore();
   }
   c.restore();
@@ -395,7 +455,7 @@ function renderAt(t) {
   show($('mash'), t, T.mash, .9);
   $('tl').setAttribute('stroke-dashoffset', (1 - eIO(prog(t, T.tline, T.tline + 2.6))).toFixed(3));
   [['ti1', 'ic1', T.i1], ['ti2', 'ic2', T.i2], ['ti3', 'ic3', T.i3]].forEach(([a, b, s]) => { show($(a), t, s, .9); show($(b), t, s - .1, .7, 6); });
-  show($('cl1'), t, T.cl1, 1.2, 14); show($('cl2'), t, T.cl2, 1.0);
+  show($('cl1'), t, T.cl1, 1.2, 14);
 }
 
 drawCardBg(); drawDoor($('doorL'), false); drawDoor($('doorR'), true);
